@@ -1,0 +1,57 @@
+html {
+    font-family: sans-serif;
+    line-height:1.5; 
+}
+
+.app {
+    border-radius:.3rem;
+    box-shadow:.1rem .1rem .3rem rgba(0,0,0,.3);
+    padding:.5rem; 
+    max-width:1600px;
+    margin:auto;
+}
+
+.types ul {
+    list-style-type: none;
+}
+
+a:visited {
+    color:blue;
+}
+
+.sem-overview div{
+    flex-direction: row;
+}
+
+.VerticalAppointment-content>div{
+    width: 100%;
+}
+.VerticalAppointment-content>div p{
+    margin-block-end: 0.5em;
+    margin-block-start: 0.5em;
+}
+
+.MainLayout-container{
+    zoom:0.6
+}
+.Label-label>span.Label-text, .Appointment-appointment>.VerticalAppointment-content {
+    font-size: 1.3rem;
+    line-height: 1.2;
+}
+p.Cell-dayOfWeek{
+    font-size: 1rem;
+}
+.Container-container{
+    min-width: 550px;
+}
+
+@media screen and (min-width:1000px) {
+    .timetable-grid {
+        display:grid;
+        grid-template-columns:2fr 3fr;
+    }
+    
+    h1 {
+        grid-column:1/-1;
+    }
+}
