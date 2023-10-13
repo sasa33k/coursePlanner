@@ -44,7 +44,9 @@ p.Cell-dayOfWeek{
 .Container-container{
     min-width: 550px;
 }
-
+.course-details {
+    line-height: 0.8rem;
+}
 @media screen and (min-width:1000px) {
     .timetable-grid {
         display:grid;

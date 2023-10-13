@@ -10,9 +10,13 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Grid } from "@mui/material";
 import {
 	DataGrid,
-	GridToolbarQuickFilter, GridToolbar
+	GridToolbarQuickFilter, GridToolbar,
+	GridLogicOperator,
+	GridToolbarContainer,GridToolbarColumnsButton,GridToolbarFilterButton,GridToolbarDensitySelector,GridToolbarExport
   } from '@mui/x-data-grid';
 // import Typography from "@material-ui/core/Typography";
+
+let selectedCRN = [];
 
 function QuickSearchToolbar() {
 	return (
@@ -24,13 +28,44 @@ function QuickSearchToolbar() {
 	  >
 		<GridToolbarQuickFilter
 			quickFilterParser={(searchInput) =>
-			searchInput
-				.split(',')
-				.map((value) => value.trim())
-				.filter((value) => value !== '')
+				// searchInput.split(',').map((value) => value.trim()).filter((value) => value !== '')
+				{
+					let params = searchInput.split(',').map((value) => value.trim())
+					params.push(...selectedCRN)
+					if(searchInput.trim() != '' ){params.push(...selectedCRN)};
+					console.log(params)
+				}
+				
 			}
+			quickFilterFormatter={(quickFilterValues) => quickFilterValues.join(', ')}
+			debounceMs={200} // time before applying the new quick filter value
 		/>
+
+		
 	  </Box> 
+	);
+  }
+  function CustomToolbar() {
+	return (
+	  <GridToolbarContainer>
+		<GridToolbarColumnsButton />
+		<GridToolbarFilterButton />
+		<GridToolbarDensitySelector />
+		<GridToolbarQuickFilter
+			quickFilterParser={(searchInput) =>
+				// searchInput.split(',').map((value) => value.trim()).filter((value) => value !== '')
+				{
+					let params = searchInput.split(',').map((value) => value.trim())
+					if(searchInput.trim() != '' ){params.push(...selectedCRN)};
+					console.log(params)
+					return params
+				}
+				
+			}
+			quickFilterFormatter={(quickFilterValues) => quickFilterValues.join(', ')}
+			debounceMs={200} // time before applying the new quick filter value
+		/>
+	  </GridToolbarContainer>
 	);
   }
   
@@ -46,7 +81,7 @@ const columns = [
 	{ field: 'Title', headerName: 'Title', minWidth: 150 },
 	{ field: 'Details', headerName: 'Details', minWidth: 400,
 		renderCell: (params) => (
-		<div>
+		<div class="course-details">
 			{params.value.map((item,index)=>{
 				return <li key={index}>{item.Type} | {item.Days} | {item.Time} | {item.Room} | {item.Instructor} {item.nonStandardStart==undefined||item.nonStandardStart==''?'':'|'+item.nonStandardStart}{item.nonStandardEnd==undefined||item.nonStandardEnd==''?'':'-'+item.nonStandardEnd}</li>
 			})}
@@ -101,7 +136,7 @@ const columns = [
 // }
   
 const TimetableCourseList = props=>{ 
-	const data = props.courseSchedules.courseSchedules.map(o=>o.sections).flat(1); //.map(d=> {d.Details = JSON.stringify(d.Details); return d;});
+	const data = props.courseSchedules.courseSchedules // .map(o=>o.sections).flat(1); //.map(d=> {d.Details = JSON.stringify(d.Details); return d;});
 
 	// const data = [
 	// 	{"id":1, "title":"a", "body":"aa"},
@@ -118,7 +153,7 @@ const TimetableCourseList = props=>{
 
 
 	return (<div><h3> Course List </h3>
-
+			<p>Selected Course CRNs: {selectedCRN.join(', ')}</p>
 {/*  */}
 			<Box sx={{ "max-width": 900 }}>
 			<DataGrid getRowId={getRowId}
@@ -134,18 +169,19 @@ const TimetableCourseList = props=>{
 					filter: {
 					  filterModel: {
 						items: [],
-						quickFilterValues: [],
+						quickFilterLogicOperator: GridLogicOperator.Or,
+						// quickFilterValues: [],
 					  },
 					},
 					pagination: { paginationModel: { pageSize: 15 } },
 				  }}
 				
-				slots={{ toolbar: GridToolbar }}
-				slotProps={{
-				  toolbar: {
-					showQuickFilter: true,
-				  },
-				}}
+				slots={{ toolbar: CustomToolbar }}
+				// slotProps={{
+				//   toolbar: {
+				// 	showQuickFilter: true,
+				//   },
+				// }}
 
 				onRowSelectionModelChange={(ids) => {
 				const selectedIDs = new Set(ids);
@@ -154,6 +190,7 @@ const TimetableCourseList = props=>{
 				);
 				console.log("changed");
 				props.setSelectedCourse(selectedRows);
+				selectedCRN = selectedRows.map(c=>c.CRN);
 				console.log(props.selectedCourse);
 				}}
 			/>

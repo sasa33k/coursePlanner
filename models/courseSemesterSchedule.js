@@ -66,25 +66,25 @@ let CourseSemesterScheduleSchema = new Schema(
         type: Number
     },
     registrationStartDate1: {
-        type: Date
+        type: String
     },
     registrationStartDateAS: {
-        type: Date
+        type: String
     },
     registrationStartDate2: {
-        type: Date
+        type: String
     },
     regularStartDate: {
-        type: Date
+        type: String
     },
     regularEndDate: {
-        type: Date
+        type: String
     },
     regularExamStartDate: {
-        type: Date
+        type: String
     },
     regularExamEndDate: {
-        type: Date
+        type: String
     },
     courseSchedules:  [{ // The Ingreditent will be stored as a reference to the ID of an existing Ingredient document. 
         type: Schema.Types.ObjectId,

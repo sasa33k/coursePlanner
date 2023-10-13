@@ -11,6 +11,17 @@ const getCourseScheduleById = (req,res) => {
     .catch(error=>{res.status(500).send(error)});
 };
 
+// get CourseSchedule by SemCode and CRN
+const getCourseScheduleBySemCrn = (req,res) => { 
+    
+    CourseSchedule.find({semester:req.params.semCode, CRN: req.params.crn})
+    .exec()
+    .then(result=>{
+        res.status(200).json({data:result});
+    }) 
+    .catch(error=>{res.status(500).send(error)});
+};
+
 // get all courses (used in AddIngredients, create recipe page)
 const getCourseSchedules = (req,res) => {
     
@@ -34,7 +45,7 @@ const createCourseSchedule = (req,res) => {
     courseSchedule.save()
     .then(result=>{
         res.set('content-location', `${req.originalUrl}/${result._id}`);
-        res.status(201).json({ data: courseSchedule, url:`${req.originalUrl}/${result._id}`});
+        res.status(201).json({ data: courseSchedule, id: `${result._id}`, url:`${req.originalUrl}/${result._id}`});
     }) 
     .catch(error=>{
         
@@ -66,4 +77,4 @@ const deleteAllCourseBySemCode = (req,res) => {
     
 };
 
-module.exports = {getCourseScheduleById, getCourseSchedules, createCourseSchedule,deleteAllCourseBySemCode};
+module.exports = {getCourseScheduleById, getCourseSchedules, createCourseSchedule,deleteAllCourseBySemCode, getCourseScheduleBySemCrn};

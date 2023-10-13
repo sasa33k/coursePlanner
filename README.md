@@ -42,12 +42,12 @@ Students can select course section, add to calendar and display in timetable
 - Day 4: Initiate React Front End: display semester course sections available for selection
 - Day 5: Investigate on React Calendar plugins and adding events to calender (single, recuring), define add event API
 - Day 6-8: Integration - Parse selected section data for adding to events 
-
 === Planned === 
 - Day 9-10: Review, Bug Fixing, Front End Design, Partial data scraping & updating (by subject), update semester dates only, scrape data count & show error, spring / winter break
 
 ### MVP 2: Semester Timetable Planner with mutiple plans for a semester
 allow student to have multiple plans for a semester, saving & editing own record identified with email address
+- Day 1: restructure course schema to prepare for user plan storage
 
 ### MVP 3: Semester Timetable Planner for multiple semesters
 

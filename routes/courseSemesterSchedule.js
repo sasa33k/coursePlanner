@@ -1,38 +1,11 @@
 const router = require('express').Router({mergeParams:true});
 // mergeParams option to ensure that your route handlers have access to all endpoint parameters throughout the routing/middleware chain
 
-const {getSemesterScheduleByCode, createSemesterSchedule, scrapeSemesterSchedule} = require('../controllers/courseSemesterController');
+const {getSemesterScheduleByCode, createSemesterSchedule, scrapeSemesterSchedule, scrapeScheduleCheerio} = require('../controllers/courseSemesterController');
 //const {commentValidator} = require('../validators/validators.js');
 const {getCourseScheduleById, getCourseSchedules, createCourseSchedule, deleteAllCourseBySemCode}  = require('../controllers/courseScheduleController');
 
-/**
- * @openapi
- * /api/v1/comment/{id}:
- *   get:
- *    summary: Get Comments of a recipe.
- *    tags: [Comment]
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: string
- *        required: true
- *        description: The id of recipe
- *    responses:
- *      200:
- *        description: Data Retrieved
- *        content:
- *          application/json:
- *              example:
- *                data:
- *                    - name: sss
- *                      comment: nice!
- *                      rating: 3
- *                      _id: 641fff30a2a3fc8ac91d3715
- *      500:
- *        description: Server error
- */
-router.get('/:semester', getSemesterScheduleByCode);
+
 
 /**
  * @openapi
@@ -90,6 +63,38 @@ router.post('/course/delete/:semCode', deleteAllCourseBySemCode);
 
 
 
+router.get('/tt', scrapeScheduleCheerio);
 router.get('/scrape/:semCode', scrapeSemesterSchedule);
+
+
+
+/**
+ * @openapi
+ * /api/v1/comment/{id}:
+ *   get:
+ *    summary: Get Comments of a recipe.
+ *    tags: [Comment]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: The id of recipe
+ *    responses:
+ *      200:
+ *        description: Data Retrieved
+ *        content:
+ *          application/json:
+ *              example:
+ *                data:
+ *                    - name: sss
+ *                      comment: nice!
+ *                      rating: 3
+ *                      _id: 641fff30a2a3fc8ac91d3715
+ *      500:
+ *        description: Server error
+ */
+router.get('/:semester', getSemesterScheduleByCode);
 
 module.exports = router;

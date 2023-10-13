@@ -35,6 +35,7 @@ const TimetableSemesterSelection = props=>{
 
 				onChange={event=>getCourseSchedules(event.target.value)}
 				>
+				<MenuItem value={202130}>TEST 2021</MenuItem>
 				<MenuItem value={202310}>SPRING SEMESTER 2023</MenuItem>
 				<MenuItem value={202320}>SUMMER SEMESTER 2023</MenuItem>
 				<MenuItem value={202330}>WINTER SEMESTER 2023</MenuItem>

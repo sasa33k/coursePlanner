@@ -62,12 +62,24 @@ const CourseRetrieval = props=>{
 					const promises = [];
 					let coursesObjArr = [];
 			
+					// for( let course of courses){
+					// 	promises.push(axios.post(`/api/v1/schedule/course/${semester}`,course, {  headers: {'Content-Type': 'application/json'} })
+					// 	.then(result=>{ console.log(result.data.data);coursesObjArr.push(result.data.data._id) })
+					// 	.catch(error => {console.log(error)}));
+					// }
 					for( let course of courses){
-						promises.push(axios.post(`/api/v1/schedule/course/${semester}`,course, {  headers: {'Content-Type': 'application/json'} })
-						.then(result=>{ console.log(result.data.data);coursesObjArr.push(result.data.data._id) })
-						.catch(error => {console.log(error)}));
+						for( let courseSection of course.sections){
+							// let courseSection = {}
+							courseSection.code = course.code;
+							courseSection.note = course.note;
+							courseSection.sectionCount = course.sectionCount;
+							// courseSection.sections = section;
+							promises.push(axios.post(`/api/v1/schedule/course/${semester}`,courseSection, {  headers: {'Content-Type': 'application/json'} })
+							.then(result=>{ 
+								coursesObjArr.push(result.data.data._id) })
+							.catch(error => {console.log(error)}));
+						}
 					}
-					
 					Promise.all(promises)
 						.then((results) => {
 							console.log("All done", results);
@@ -92,19 +104,19 @@ const CourseRetrieval = props=>{
 			<label> Semester &nbsp;
 			<input type="text" value={semester} onChange={event=>setSemester(event.target.value)} /></label>  <br />
 			<label> Registration Period 1 Start Date &nbsp;
-			<input type="date" value={registrationStartDate1} onChange={event=>setRegistrationStartDate1(event.target.value)} /></label> <br />
+			<input type="date" value={registrationStartDate1} onChange={event=>setRegistrationStartDate1(new Date(event.target.value).toISOString().slice(0, 10))} /></label> <br />
 			<label> Arts and Science Registration Start Date &nbsp;
-			<input type="date" value={registrationStartDateAS} onChange={event=>setRegistrationStartDateAS(event.target.value)} /></label> <br />
+			<input type="date" value={registrationStartDateAS} onChange={event=>setRegistrationStartDateAS(new Date(event.target.value).toISOString().slice(0, 10))} /></label> <br />
 			<label> Registration Period 2 Start Date &nbsp;
-			<input type="date" value={registrationStartDate2} onChange={event=>setRegistrationStartDate2(event.target.value)} /></label> <br />
+			<input type="date" value={registrationStartDate2} onChange={event=>setRegistrationStartDate2(new Date(event.target.value).toISOString().slice(0, 10))} /></label> <br />
 			<label> Start Date for Regular Semester &nbsp;
-			<input type="date" value={regularStartDate} onChange={event=>setRegularStartDate(event.target.value)} /></label> <br />
+			<input type="date" value={regularStartDate} onChange={event=>setRegularStartDate(new Date(event.target.value).toISOString().slice(0, 10))} /></label> <br />
 			<label> End Date for Regular Semester &nbsp;
-			<input type="date" value={regularEndDate} onChange={event=>setRegularEndDate(event.target.value)} /></label> <br />
+			<input type="date" value={regularEndDate} onChange={event=>setRegularEndDate(new Date(event.target.value).toISOString().slice(0, 10))} /></label> <br />
 			<label> Start Date for Regular Exam &nbsp;
-			<input type="date" value={regularExamStartDate} onChange={event=>setRegularExamStartDate(event.target.value)} /></label> <br />
+			<input type="date" value={regularExamStartDate} onChange={event=>setRegularExamStartDate(new Date(event.target.value).toISOString().slice(0, 10))} /></label> <br />
 			<label> End Date for Regular Exam &nbsp;
-			<input type="date" value={regularExamEndDate} onChange={event=>setRegularExamEndDate(event.target.value)} /></label> <br />
+			<input type="date" value={regularExamEndDate} onChange={event=>setRegularExamEndDate(new Date(event.target.value).toISOString().slice(0, 10))} /></label> <br />
 			<label> Scrape Data? &nbsp;
 			<input type="checkbox" checked={isScrape} onChange={event=>setIsScrape(!isScrape)} /></label> <br />
 			<button type="submit">Submit</button>
