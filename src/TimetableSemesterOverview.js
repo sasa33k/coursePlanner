@@ -18,8 +18,8 @@ const TimetableSemesterOverview = props=>{
 			<FormControl fullWidth>
 				<TextField label="Semester Code" value={props.courseSchedules==undefined?'':props.courseSchedules.semester} disabled id="outlined-disabled"/>
 				<TextField label="Total Number of Courses" value={props.courseSchedules==undefined?'':props.courseSchedules.courseCount} disabled id="outlined-disabled"/>
-				<TextField label="Regular Semester Start Date" value={props.courseSchedules==undefined?'':formatDate(props.courseSchedules.regularStartDate)} disabled id="outlined-disabled"/>
-				<TextField label="Regular Semester End Date" value={props.courseSchedules==undefined?'':formatDate(props.courseSchedules.regularEndDate)} disabled id="outlined-disabled"/>
+				<TextField label="Regular Semester Start Date" value={props.courseSchedules==undefined?'':props.courseSchedules.regularStartDate} disabled id="outlined-disabled"/>
+				<TextField label="Regular Semester End Date" value={props.courseSchedules==undefined?'':props.courseSchedules.regularEndDate} disabled id="outlined-disabled"/>
 			</FormControl>
 			</Box>
 		</>
