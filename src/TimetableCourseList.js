@@ -179,6 +179,7 @@ const TimetableCourseList = props=>{
 				checkboxSelection
 				// disableColumnSelector
 				// disableDensitySelector
+				loading={props.loading}
         		rows={data}
 				columns={columns}
 				initialState={{

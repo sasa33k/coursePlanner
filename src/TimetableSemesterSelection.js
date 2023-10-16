@@ -14,10 +14,12 @@ const TimetableSemesterSelection = props=>{
 
     const getCourseSchedules = (semCode) => {
 		props.setSemester(semCode)
+		props.setLoading(true);
 		axios.get(`/api/v1/schedule/${semCode}`)
 			.then(results => {
 				props.setCourseSchedules(results.data.data);
 				console.log("post successfully", results.data.data);
+				props.setLoading(false);
 			})
 			.catch(error=>console.log("error",error))
 	  };

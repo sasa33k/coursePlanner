@@ -49,6 +49,7 @@ const App = props=>{
   }]);
   const [selectedPlanCRN, setSelectedPlanCRN] = useState([]);
   const [selectedCRN, setSelectedCRN] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 
 	return (
@@ -59,13 +60,13 @@ const App = props=>{
       </div>
 
       <div className="planner-timetable-selection timetable-grid">
-        <TimetableSemesterSelection semester={semester} setSemester={setSemester} courseSchedules={courseSchedules} setCourseSchedules={setCourseSchedules}/>
+        <TimetableSemesterSelection semester={semester} setSemester={setSemester} setLoading={setLoading} courseSchedules={courseSchedules} setCourseSchedules={setCourseSchedules}/>
         <TimetableSemesterOverview courseSchedules={ courseSchedules } />
       </div>
 
       <div className="planner-timetable-calendar timetable-grid">
         <TimetableScheduler selectedCourse={selectedCourse} regularStartDate={courseSchedules==undefined?new Date():courseSchedules.regularStartDate} regularEndDate={courseSchedules==undefined?new Date():courseSchedules.regularEndDate}/>
-        {courseSchedules==undefined?'':<TimetableCourseList courseSchedules={ courseSchedules } selectedPlanCRN={selectedPlanCRN} setSelectedCourse={setSelectedCourse} selectedCourse={selectedCourse} selectedCRN={selectedCRN} setSelectedCRN={setSelectedCRN}/> }
+        {courseSchedules==undefined?'':<TimetableCourseList loading={loading} courseSchedules={ courseSchedules } selectedPlanCRN={selectedPlanCRN} setSelectedCourse={setSelectedCourse} selectedCourse={selectedCourse} selectedCRN={selectedCRN} setSelectedCRN={setSelectedCRN}/> }
       </div>
 
       <CourseRetrieval aa="b"/>

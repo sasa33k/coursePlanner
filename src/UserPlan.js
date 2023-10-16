@@ -114,18 +114,16 @@ const UserPlan = props=>{
 			</div>
 			
 			{ currentUser =='' || props.semester == '' ? '' :
-				<form onSubmit={event=>addUserPlan(event)}> 
+				<div className='userPlan-update'>
 					<label> Description &nbsp;
 					<input type="text" value={newPlanDescription} onChange={event=>setNewPlanDescription(event.target.value)}/></label>  
-					<button type="submit">New Plan</button>
+					<button onClick={event=>addUserPlan(event)}>New Plan</button>
 					{currentPlanDescription == ''?'':
-						<div className='userSavePlan-btn'>
-							<button onClick={event=>updateUserPlan(currentPlanId)}>
-								Save to {currentPlanDescription}
-							</button>
-						</div>
+						<button className='userSavePlan-btn' onClick={event=>updateUserPlan(currentPlanId)}>
+							Save to {currentPlanDescription}
+						</button>
 					}
-				</form> 
+				</div>
 			}
 			{/* <div>
 				<ul>{currentPlanCRN==undefined?'':currentPlanCRN.map(c => (<li>{c}</li>))}</ul>
