@@ -8,6 +8,7 @@ import TimetableSemesterOverview from './TimetableSemesterOverview'
 import TimetableCourseList from './TimetableCourseList'
 import TimetableSemesterSelection from './TimetableSemesterSelection';
 import TimetableScheduler from './TimetableScheduler';
+import UserPlan from './UserPlan';
 
 const App = props=>{ 
 
@@ -45,12 +46,17 @@ const App = props=>{
         }
     ],
     "_id": "65130f5aa723b6748ab83e00"
-}]);
+  }]);
+  const [selectedPlanCRN, setSelectedPlanCRN] = useState([]);
+  const [selectedCRN, setSelectedCRN] = useState([]);
 
 
 	return (
     <div className="planner-timetable">
-	    <h1>Semester Timetable Planner</h1>
+      <div className="planner-timetable-header timetable-grid">
+	      <h1>Semester Timetable Planner</h1>
+        <UserPlan semester={semester.toString()} selectedCRN={selectedCRN} selectedPlanCRN={selectedPlanCRN} setSelectedPlanCRN={setSelectedPlanCRN}/>
+      </div>
 
       <div className="planner-timetable-selection timetable-grid">
         <TimetableSemesterSelection semester={semester} setSemester={setSemester} courseSchedules={courseSchedules} setCourseSchedules={setCourseSchedules}/>
@@ -59,7 +65,7 @@ const App = props=>{
 
       <div className="planner-timetable-calendar timetable-grid">
         <TimetableScheduler selectedCourse={selectedCourse} regularStartDate={courseSchedules==undefined?new Date():courseSchedules.regularStartDate} regularEndDate={courseSchedules==undefined?new Date():courseSchedules.regularEndDate}/>
-        {courseSchedules==undefined?'':<TimetableCourseList courseSchedules={ courseSchedules } setSelectedCourse={setSelectedCourse} selectedCourse={selectedCourse}/> }
+        {courseSchedules==undefined?'':<TimetableCourseList courseSchedules={ courseSchedules } selectedPlanCRN={selectedPlanCRN} setSelectedCourse={setSelectedCourse} selectedCourse={selectedCourse} selectedCRN={selectedCRN} setSelectedCRN={setSelectedCRN}/> }
       </div>
 
       <CourseRetrieval aa="b"/>

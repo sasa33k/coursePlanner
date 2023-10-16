@@ -35,11 +35,11 @@ const TimetableSemesterSelection = props=>{
 
 				onChange={event=>getCourseSchedules(event.target.value)}
 				>
-				<MenuItem value={202130}>TEST 2021</MenuItem>
-				<MenuItem value={202310}>SPRING SEMESTER 2023</MenuItem>
-				<MenuItem value={202320}>SUMMER SEMESTER 2023</MenuItem>
-				<MenuItem value={202330}>WINTER SEMESTER 2023</MenuItem>
-				<MenuItem value={202410}>SPRING SEMESTER 2024</MenuItem>
+				<MenuItem value={'202130'}>TEST 2021</MenuItem>
+				<MenuItem value={'202310'}>SPRING SEMESTER 2023</MenuItem>
+				<MenuItem value={'202320'}>SUMMER SEMESTER 2023</MenuItem>
+				<MenuItem value={'202330'}>WINTER SEMESTER 2023</MenuItem>
+				<MenuItem value={'202410'}>SPRING SEMESTER 2024</MenuItem>
 				</Select>
 
 				{/* <TextField label="Total Number of Courses" defaultValue={props.courseSchedules==undefined?'':props.courseSchedules.courseCount} disabled id="outlined-disabled"/> */}

@@ -9,14 +9,14 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Grid } from "@mui/material";
 import {
-	DataGrid,
+	DataGrid, useGridApiRef,
 	GridToolbarQuickFilter, GridToolbar,
 	GridLogicOperator,
 	GridToolbarContainer,GridToolbarColumnsButton,GridToolbarFilterButton,GridToolbarDensitySelector,GridToolbarExport
   } from '@mui/x-data-grid';
 // import Typography from "@material-ui/core/Typography";
 
-let selectedCRN = [];
+let selectedList = [];
 
 function QuickSearchToolbar() {
 	return (
@@ -31,8 +31,8 @@ function QuickSearchToolbar() {
 				// searchInput.split(',').map((value) => value.trim()).filter((value) => value !== '')
 				{
 					let params = searchInput.split(',').map((value) => value.trim())
-					params.push(...selectedCRN)
-					if(searchInput.trim() != '' ){params.push(...selectedCRN)};
+					params.push(...selectedList)
+					if(searchInput.trim() != '' ){params.push(...selectedList)};
 					console.log(params)
 				}
 				
@@ -45,29 +45,7 @@ function QuickSearchToolbar() {
 	  </Box> 
 	);
   }
-  function CustomToolbar() {
-	return (
-	  <GridToolbarContainer>
-		<GridToolbarColumnsButton />
-		<GridToolbarFilterButton />
-		<GridToolbarDensitySelector />
-		<GridToolbarQuickFilter
-			quickFilterParser={(searchInput) =>
-				// searchInput.split(',').map((value) => value.trim()).filter((value) => value !== '')
-				{
-					let params = searchInput.split(',').map((value) => value.trim())
-					if(searchInput.trim() != '' ){params.push(...selectedCRN)};
-					console.log(params)
-					return params
-				}
-				
-			}
-			quickFilterFormatter={(quickFilterValues) => quickFilterValues.join(', ')}
-			debounceMs={200} // time before applying the new quick filter value
-		/>
-	  </GridToolbarContainer>
-	);
-  }
+ 
   
 // const VISIBLE_FIELDS = ['name', 'rating', 'country', 'dateCreated', 'isAdmin'];
 const columns = [
@@ -138,6 +116,21 @@ const columns = [
 const TimetableCourseList = props=>{ 
 	const data = props.courseSchedules.courseSchedules // .map(o=>o.sections).flat(1); //.map(d=> {d.Details = JSON.stringify(d.Details); return d;});
 
+	const [selectionModel, setSelectionModel] = React.useState([]);
+	const test = ()=>{console.log("test"); setSelectionModel(props.selectedCRN)}
+	const apiRef = useGridApiRef();
+	const selectRows = () => {	
+		if(props.selectedPlanCRN != undefined && props.selectedPlanCRN.length >0 ){
+			selectedList = props.selectedPlanCRN
+			apiRef.current.setRowSelectionModel(props.selectedPlanCRN)
+			// apiRef.current.selectRow(
+			// 	props.selectedPlanCRN,
+			//     !apiRef.current.isRowSelected(props.selectedCRN),
+			// );
+			props.setSelectedCRN(props.selectedPlanCRN)
+		}
+	  };
+	useEffect(selectRows, [props.selectedPlanCRN]);
 	// const data = [
 	// 	{"id":1, "title":"a", "body":"aa"},
 	// 	{"id":2, "title":"b", "body":"aab"},
@@ -150,10 +143,33 @@ const TimetableCourseList = props=>{
 	// 	[data.columns],
 	//   );
 	
-
+	function CustomToolbar() {
+		return (
+		  <GridToolbarContainer>
+			<GridToolbarColumnsButton />
+			<GridToolbarFilterButton />
+			<GridToolbarDensitySelector />
+			<GridToolbarQuickFilter
+				quickFilterParser={(searchInput) =>
+					// searchInput.split(',').map((value) => value.trim()).filter((value) => value !== '')
+					{
+						let params = searchInput.split(',').map((value) => value.trim())
+						console.log(props.selectedCRN)
+						if(searchInput.trim() != '' ){params.push(...props.selectedCRN)};
+						console.log(params)
+						return params
+					}
+					
+				}
+				quickFilterFormatter={(quickFilterValues) => quickFilterValues.join(', ')}
+				debounceMs={200} // time before applying the new quick filter value
+			/>
+		  </GridToolbarContainer>
+		);
+	  }
 
 	return (<div><h3> Course List </h3>
-			<p>Selected Course CRNs: {selectedCRN.join(', ')}</p>
+			<p>Selected Course CRNs: {props.selectedCRN==undefined?'':props.selectedCRN.join(', ')}</p>
 {/*  */}
 			<Box sx={{ "max-width": 900 }}>
 			<DataGrid getRowId={getRowId}
@@ -182,16 +198,26 @@ const TimetableCourseList = props=>{
 				// 	showQuickFilter: true,
 				//   },
 				// }}
+				
+				apiRef={apiRef}
+				// selectionModel={selectionModel}
 
 				onRowSelectionModelChange={(ids) => {
-				const selectedIDs = new Set(ids);
-				const selectedRows = data.filter((row) =>
-					selectedIDs.has(getRowId(row))
-				);
-				console.log("changed");
-				props.setSelectedCourse(selectedRows);
-				selectedCRN = selectedRows.map(c=>c.CRN);
-				console.log(props.selectedCourse);
+					const selectedIDs = new Set(ids);
+					const selectedRows = data.filter((row) =>
+						selectedIDs.has(getRowId(row))
+					);
+					// props.setSelectedCRN(selectedIDs);
+					console.log("changed-");
+					console.log(ids);
+					console.log("-changed");
+					props.setSelectedCourse(selectedRows);
+					setSelectionModel(ids);
+					props.setSelectedCRN(selectedRows.map(c=>c.CRN));
+					// selectedList = props.selectedCRN
+					// selectedCRN = selectedRows.map(c=>c.CRN);
+					console.log(props.selectedCourse);
+					
 				}}
 			/>
 			</Box>

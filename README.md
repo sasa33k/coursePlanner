@@ -48,6 +48,10 @@ Students can select course section, add to calendar and display in timetable
 ### MVP 2: Semester Timetable Planner with mutiple plans for a semester
 allow student to have multiple plans for a semester, saving & editing own record identified with email address
 - Day 1: restructure course schema to prepare for user plan storage
+- Day 2: user plan APIs
+- Day 3: integrate with course data grid (save new plans, update plans, update data grid selection)
+=== Planned === 
+- Day 4: Fix UI / UX issues, data validation / checking
 
 ### MVP 3: Semester Timetable Planner for multiple semesters
 
