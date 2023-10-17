@@ -35,6 +35,12 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public') 
     },
+    optimization: {
+      nodeEnv: 'production',
+      minimize: true,
+      concatenateModules: true,
+  
+    },
     module: { 
         rules: [{
             test:/\.css$/, 
