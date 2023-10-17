@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
     "watch": "webpack --watch",
-    "webpack": "webpack",
-    "build": "npm install --omit=dev && webpack",
+    "webpack": "webpack --config webpack.config.js",
+    "build": "npm install --omit=dev",
     "start": "node app.js"
   },
   "keywords": [],
