@@ -9,7 +9,6 @@
     "watch": "webpack --watch",
     "webpack": "webpack",
     "build": "npm install --production && webpack",
-    "postinstall": "node-prune",
     "start": "node app.js"
   },
   "keywords": [],
