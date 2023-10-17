@@ -2,12 +2,12 @@ import React from 'react'
 const { useEffect, useState } = React;
 import axios from 'axios';
 //mui
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
+import {Box, InputLabel, MenuItem, FormControl, Select} from '@mui/material';
+// import Box from '@mui/material/Box';
+// import InputLabel from '@mui/material/InputLabel';
+// import MenuItem from '@mui/material/MenuItem';
+// import FormControl from '@mui/material/FormControl';
+// import Select from '@mui/material/Select';
 
 
 const TimetableSemesterSelection = props=>{ 

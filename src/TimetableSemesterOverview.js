@@ -2,9 +2,7 @@ import React from 'react'
 const { useEffect, useState } = React;
 import axios from 'axios';
 //mui
-import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
+import {Box, FormControl, TextField} from '@mui/material';
 
 function formatDate(dateStr){
 	let d = new Date(dateStr)
