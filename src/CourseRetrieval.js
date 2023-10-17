@@ -99,7 +99,7 @@ const CourseRetrieval = props=>{
         .catch(error => {console.log(error)});
 	}
 
-	return (<div><h2> Semester Course Schedule </h2>
+	return (<div><h2> Semester Course Schedule (Local Run Only)</h2>
 		<form onSubmit={event=>submitSemester(event)}> 
 			<label> Semester &nbsp;
 			<input type="text" value={semester} onChange={event=>setSemester(event.target.value)} /></label>  <br />

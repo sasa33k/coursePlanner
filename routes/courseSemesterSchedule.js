@@ -1,7 +1,7 @@
 const router = require('express').Router({mergeParams:true});
 // mergeParams option to ensure that your route handlers have access to all endpoint parameters throughout the routing/middleware chain
 
-const {getSemesterScheduleByCode, createSemesterSchedule, scrapeSemesterSchedule, scrapeScheduleCheerio} = require('../controllers/courseSemesterController');
+const {getSemesterScheduleByCode, createSemesterSchedule, scrapeSemesterSchedule} = require('../controllers/courseSemesterController');
 //const {commentValidator} = require('../validators/validators.js');
 const {getCourseScheduleById, getCourseSchedules, createCourseSchedule, deleteAllCourseBySemCode}  = require('../controllers/courseScheduleController');
 
@@ -61,9 +61,6 @@ router.post('/course/:semCode', createCourseSchedule);
 
 router.post('/course/delete/:semCode', deleteAllCourseBySemCode);
 
-
-
-router.get('/tt', scrapeScheduleCheerio);
 router.get('/scrape/:semCode', scrapeSemesterSchedule);
 
 
