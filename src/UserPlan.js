@@ -44,7 +44,7 @@ const UserPlan = props=>{
 			.catch(error=>console.log("error",error))
 		}
 	};
-	useEffect(retrieveUserPlans, [props.semester, newSubmittedPlanDescription]);
+	useEffect(retrieveUserPlans, [props.semester, currentUser, newSubmittedPlanDescription]);
 
 
 	const changeCurrentSelection = async (planId) => { 
