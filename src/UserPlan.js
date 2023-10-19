@@ -1,6 +1,8 @@
 import React from 'react'
 const { useEffect, useState } = React;
 import axios from 'axios';
+import {Box, FormControl, TextField} from '@mui/material';
+import Button from '@mui/material/Button';
 
 const UserPlan = props=>{ 
 
@@ -58,24 +60,28 @@ const UserPlan = props=>{
 
 	const addUserPlan = async (event) => { 
 		event.preventDefault();
-		setSubmittedNewPlanDescription(newPlanDescription)
-		// filter by semester?
-		if(currentUser != ''){
-			axios.post('/api/v1/course/userPlanUpdate', {
-				email: currentUser,
-				"plan": {
-					"semester": props.semester,
-					"description": newPlanDescription,
-					"courses": props.selectedCRN
-				}
-			})
-			.then(results => {
-				// get user plans
-				retrieveUserPlans();
-				console.log(results)
-			})
-			.catch(error=>console.log("error",error))
+		if(newPlanDescription.length <1 || newPlanDescription.length >10){
+			alert("Please enter a plan description of length 1-10 characters")
+		} else {
+			setSubmittedNewPlanDescription(newPlanDescription)
+			if(currentUser != ''){
+				axios.post('/api/v1/course/userPlanUpdate', {
+					email: currentUser,
+					"plan": {
+						"semester": props.semester,
+						"description": newPlanDescription,
+						"courses": props.selectedCRN
+					}
+				})
+				.then(results => {
+					// get user plans
+					retrieveUserPlans();
+					console.log(results)
+				})
+				.catch(error=>console.log("error",error))
+			}
 		}
+		
 	};
 
 	const updateUserPlan = async (planId) => { 
@@ -100,28 +106,34 @@ const UserPlan = props=>{
 
 	return (
 		<div className='user'>
-			<form onSubmit={event=>submitUser(event)}> 
-				<label> Email &nbsp;
-				<input type="text" disabled={currentUser==''?false:true} onChange={event=>setUserEmail(event.target.value)} /></label>  
-				{ currentUser =='' ? <button type="submit" onClick={()=>setCurrentUser(userEmail)}>Submit</button> : <button onClick={()=>setCurrentUser('')}>Logout</button> }
-				
-			</form> 
+			<div className='userPlan-login'>
+				<TextField label="Email" disabled={currentUser==''?false:true} 
+					onChange={event=>setUserEmail(event.target.value)}
+					onKeyPress={(e) => {
+						if (e.key === 'Enter') {
+							setCurrentUser(userEmail);submitUser();
+						}
+					}}/>
+				{ currentUser =='' ? 
+					<Button variant="contained" type="submit" onClick={()=>{setCurrentUser(userEmail);submitUser();}}>Submit</Button> : 
+					<Button variant="outlined" onClick={()=>{setCurrentUser(''); setUserPlans([]) }}>Logout</Button> }
+			</div>
 			<div className='userPlan-btn'>
 				{userPlans ==undefined ? '' : userPlans.map(p => (
-					<button onClick={event=>changeCurrentSelection(event.target.value)}
-					key={p._id} value={p._id}>{p.description}</button>
+					<Button variant="outlined" onClick={event=>changeCurrentSelection(event.target.value)}
+					key={p._id} value={p._id}>{p.description}</Button>
 				))}
 			</div>
 			
 			{ currentUser =='' || props.semester == '' ? '' :
 				<div className='userPlan-update'>
-					<label> Description &nbsp;
-					<input type="text" value={newPlanDescription} onChange={event=>setNewPlanDescription(event.target.value)}/></label>  
-					<button onClick={event=>addUserPlan(event)}>New Plan</button>
+					<TextField label="Description" required inputProps={{ maxLength: 2, maxLength: 12 }}
+						value={newPlanDescription} onChange={event=>setNewPlanDescription(event.target.value)}/>
+					<Button variant="outlined" onClick={event=>addUserPlan(event)}>New Plan</Button>
 					{currentPlanDescription == ''?'':
-						<button className='userSavePlan-btn' onClick={event=>updateUserPlan(currentPlanId)}>
+						<Button variant="contained" className='userSavePlan-btn' onClick={event=>updateUserPlan(currentPlanId)}>
 							Save to {currentPlanDescription}
-						</button>
+						</Button>
 					}
 				</div>
 			}
