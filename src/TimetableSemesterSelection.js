@@ -16,6 +16,15 @@ const TimetableSemesterSelection = props=>{
 		props.setSemester(semCode)
 		props.setLoading(true);
 		axios.get(`/api/v1/schedule/${semCode}`)
+		// axios.get(`https://course-planner-58sw.onrender.com/api/v1/schedule/${semCode}`, {
+		// 	headers: {
+		// 	'Access-Control-Allow-Origin': '*',
+		// 	},
+		// 	proxy: {
+		// 		host: 'localhost',
+		// 		port: 8080
+		// 	}
+		// 	})
 			.then(results => {
 				props.setCourseSchedules(results.data.data);
 				console.log("post successfully", results.data.data);
